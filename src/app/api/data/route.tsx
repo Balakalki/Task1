@@ -1,6 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { query } from "@/lib/db";
 import type { JobPost } from "@/lib/types";
+import { corsMiddleware } from "@/lib/cors";
 
 // GET Route: Fetch Jobs with Company & Location Details
 export async function GET(req: NextRequest) {
@@ -69,8 +70,9 @@ export async function GET(req: NextRequest) {
     
     queryString += " ORDER BY j.created_at DESC";
     const result = await query(queryString, params);
-    
-    return NextResponse.json(result);
+  const response = NextResponse.json(result, { status: 200 });
+  return corsMiddleware(response);
+
   } catch (error) {
     console.error("Database error:", error);
     return NextResponse.json({ error: "Failed to fetch jobs" }, { status: 500 });
@@ -80,7 +82,10 @@ export async function GET(req: NextRequest) {
 // POST Route: Insert Job After Fetching/Inserting Company & Location
 export async function POST(req: NextRequest) {
   try {
-    const body: JobPost = await req.json();
+    await corsMiddleware(new NextResponse());
+    const data = await req.json();
+
+    const body: JobPost = data;
     const {
       job_title,
       company_name,
@@ -149,8 +154,8 @@ export async function POST(req: NextRequest) {
         requirements
       ]
     );
-
-    return NextResponse.json({ message: "Job added successfully" }, { status: 201 });
+    const response = NextResponse.json({ message: "Job added successfully" }, { status: 201 });
+    return corsMiddleware(response); 
   } catch (error) {
     console.error("Database Error:", error);
     return NextResponse.json({ error: "Failed to insert job" }, { status: 500 });
