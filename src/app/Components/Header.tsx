@@ -52,6 +52,7 @@ export default function SearchBox({ onSearch }: SearchBoxProps) {
   };
 
   return (
+<<<<<<< HEAD
     <div className="flex flex-col items-center w-full p-4 bg-white shadow-lg">
       {/* Top Navigation */}
       <div className="w-full flex justify-between items-center px-4 md:px-10">
@@ -66,6 +67,22 @@ export default function SearchBox({ onSearch }: SearchBoxProps) {
         <div className="hidden lg:flex space-x-8 text-gray-700 font-semibold">
           {menuItems.map((item) => (
             <a key={item} className="cursor-pointer hover:text-indigo-600 transition">
+=======
+    <div className="w-full flex flex-col">
+      {/* Top Header */}
+      <div className="flex py-5  w-full justify-center">
+        <div className="px-10 items-center w-[60%] flex justify-between h-14 bg-white rounded-[2.5rem] shadow-[0px_0px_20px_rgba(0,0,0,0.3)]">
+          <img
+            className="h-12 cursor-pointer"
+            src="https://www.cybermindworks.com/images/cmwlogo.svg"
+            alt=""
+          />
+          {menuItems.map((item, ind) => (
+            <li
+              className="list-none cursor-pointer font-semibold hover:text-blue-600"
+              key={ind}
+            >
+>>>>>>> 4cde2598c7aa93dd4e12d7625729eae31df7a1d6
               {item}
             </a>
           ))}
@@ -120,9 +137,18 @@ export default function SearchBox({ onSearch }: SearchBoxProps) {
           <option value="Contract">Contract</option>
         </select>
 
+<<<<<<< HEAD
         {/* Salary Range */}
         <div className="w-full md:w-1/4 flex flex-col">
           <p className="text-sm font-semibold">Salary Per Month</p>
+=======
+        {/* Salary Range Slider (Single Line) */}
+        <div className="w-[25%] px-3 py-1 gap-2 flex flex-col">
+          <div className="flex justify-between font-semibold">
+            <p>Salary Per Month</p>
+            <p className="">₹{range[0]}k - ₹{range[1]}k</p>
+          </div>
+>>>>>>> 4cde2598c7aa93dd4e12d7625729eae31df7a1d6
           <RangeSlider
             value={range}
             onChange={handleSalaryChange}
