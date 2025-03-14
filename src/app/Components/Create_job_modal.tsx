@@ -39,7 +39,6 @@ export default function CreateJobModal({ onClose }: CreateJobModalProps) {
   };
 
   const handleSubmit = async (isDraft: boolean) => {
-    // if (isDraft) {
       try {
         setIsSubmitting(true);
         await createJob({
@@ -53,9 +52,6 @@ export default function CreateJobModal({ onClose }: CreateJobModalProps) {
       } finally {
         setIsSubmitting(false);
       }
-    // } else {
-    //   console.log("Drafted successfully");
-    // }
   };
 
   return (
@@ -78,10 +74,7 @@ export default function CreateJobModal({ onClose }: CreateJobModalProps) {
           <TextInput
             label="Job Title"
             placeholder="Full Stack Developer, Developer"
-            styles={{
-              input: { height: "48px", fontSize: "16px" },
-              label: { fontSize: "18px", fontWeight: "600", color: "#333" },
-            }}
+            
             value={formData.job_title}
             onChange={(e) => handleChange("job_title", e.target.value)}
           />
