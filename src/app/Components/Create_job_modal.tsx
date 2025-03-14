@@ -108,17 +108,17 @@ export default function CreateJobModal({ onClose }: CreateJobModalProps) {
             <option value="" disabled selected>
               Choose Preferred Location
             </option>
-            <option className="text-black w-full" value="Remote">
-              Remote
+            <option className="text-black w-full" value="Internship">
+              Hyderabad
             </option>
             <option className="text-black w-full" value="Chennai">
               Chennai
             </option>
             <option className="text-black w-full" value="San Francisco">
-              San Francisco
+              Benguluru
             </option>
             <option className="text-black w-full" value="New York">
-              New York
+              Delhi
             </option>
           </select>
         </Grid.Col>
@@ -145,7 +145,7 @@ export default function CreateJobModal({ onClose }: CreateJobModalProps) {
               Contract
             </option>
             <option className="text-black" value="freelance">
-              Freelancer
+              Internship
             </option>
           </select>
         </Grid.Col>
