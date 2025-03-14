@@ -144,7 +144,7 @@ export default function CreateJobModal({ onClose }: CreateJobModalProps) {
             <option className="text-black" value="Contract">
               Contract
             </option>
-            <option className="text-black" value="freelance">
+            <option className="text-black" value="Internship">
               Internship
             </option>
           </select>
