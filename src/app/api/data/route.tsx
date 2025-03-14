@@ -11,8 +11,8 @@ export async function GET(req: NextRequest) {
     const jobTypeParam = searchParams.get("job_Type") || "";
     let salaryMinParam = searchParams.get("salary_Min") || 0;
     let salaryMaxParam = searchParams.get("salary_Max") || 0;
-    salaryMinParam = salaryMinParam ? Number(salaryMinParam) * 12000 : 0;
-    salaryMaxParam = salaryMaxParam ? Number(salaryMaxParam) * 12000 : 1;
+    salaryMinParam = salaryMinParam ? Number(salaryMinParam) * 12 : 0;
+    salaryMaxParam = salaryMaxParam ? Number(salaryMaxParam) * 12 : 1;
 
     let queryString = `
       SELECT 

@@ -203,7 +203,7 @@ export default function CreateJobModal({ onClose }: CreateJobModalProps) {
         <Grid.Col span={3}>
           <Button
             variant="outline"
-            className="!h-10 !text-black !border-black shadow-2xl !flex justify-center items-baseline !text-lg"
+            className="!h-10 !text-black !border-black shadow-2xl !flex justify-center items-baseline !text-md"
             fullWidth
             onClick={() => handleSubmit(true)}
             disabled={isSubmitting}
