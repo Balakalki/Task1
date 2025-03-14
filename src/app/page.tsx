@@ -47,7 +47,7 @@ export default function Home() {
   return (
     <>
       <Header onSearch={setFilters} />
-      <div className="p-4 flex justify-center sm:px-[7%]">
+      <div className="p-4 flex justify-center">
         {loading ? (
           <p>Loading jobs...</p>
         ) : data.length === 0 ? (
