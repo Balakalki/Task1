@@ -53,7 +53,7 @@ export default function Home() {
         ) : data.length === 0 ? (
           <p>No jobs found</p> // Handle the case where no jobs are returned
         ) : (
-          <ul className="flex flex-wrap gap-10">
+          <ul className="flex flex-wrap gap-10 pt-10">
             {data.map((job) => (
               <li key={job.job_id}>
                 <Card jobData={job} />
