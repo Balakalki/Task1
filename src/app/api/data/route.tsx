@@ -11,10 +11,9 @@ export async function GET(req: NextRequest) {
     const jobTypeParam = searchParams.get("job_Type") || "";
     let salaryMinParam = searchParams.get("salary_Min") || 0;
     let salaryMaxParam = searchParams.get("salary_Max") || 0;
-    salaryMinParam = salaryMinParam ? Number(salaryMinParam) * 12 : 0;
-    salaryMaxParam = salaryMaxParam ? Number(salaryMaxParam) * 12 : 1;
+    salaryMinParam = salaryMinParam ? Number(salaryMinParam) * 12000 : 0;
+    salaryMaxParam = salaryMaxParam ? Number(salaryMaxParam) * 12000 : 1;
 
-    console.log("filter came to back end ",queryParam, locationParam, jobTypeParam, salaryMinParam, salaryMaxParam);
     let queryString = `
       SELECT 
         j.job_id, 
@@ -69,8 +68,6 @@ export async function GET(req: NextRequest) {
     }
     
     queryString += " ORDER BY j.created_at DESC";
-    // console.log("final lquery is ", queryString);
-    // console.log("Parameters: ", params);
     const result = await query(queryString, params);
     
     return NextResponse.json(result);
@@ -84,7 +81,6 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   try {
     const body: JobPost = await req.json();
-    console.log("this message is from route post", body);
     const {
       job_title,
       company_name,
@@ -135,18 +131,6 @@ export async function POST(req: NextRequest) {
     ))[0].id;
 
     // Insert Job
-    console.log("final query is as follows ", job_title,
-      company_location_id,
-      job_type,
-      job_mode,
-      salary_min,
-      salary_max,
-      application_deadline,
-      job_description,
-      min_exp,
-      max_exp,
-      responsibilities,
-    requirements)
     await query(
       `INSERT INTO jobs (job_title, company_location_id, job_type, job_mode, salary_min, salary_max, application_deadline, job_description, min_exp, max_exp,responsibilities, requirements)
        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`,

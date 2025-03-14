@@ -17,8 +17,6 @@ interface JobCardProps {
 const JobCardCom: React.FC<JobCardProps> = ({ jobData }) => {
   const timeAgo = dayjs.utc(jobData.created_at).add(5, 'hours').add(30, 'minutes').fromNow();
 
-
-  console.log(dayjs.utc()), jobData.created_at;
   return (
     <div className="max-w-80 bg-white shadow-lg rounded-2xl p-5 border border-gray-200">
       {/* Header */}
@@ -52,15 +50,17 @@ const JobCardCom: React.FC<JobCardProps> = ({ jobData }) => {
 
       {/* Additional Job Details */}
       <ul className="text-sm text-gray-700 mt-3 list-disc pl-5">
-        {jobData.job_description
-          ? jobData.job_description
-              .split(".")
-              .filter((sentence) => sentence.trim() !== "")
-              .map((sentence, index) => (
-                <li key={index}>{sentence.trim()}.</li>
-              ))
-          : "No description available"}
-      </ul>
+  {jobData.job_description && typeof jobData.job_description === "string" && jobData.job_description.trim() !== "" ? (
+    jobData.job_description
+      .split(".")
+      .filter((sentence) => sentence.trim() !== "")
+      .map((sentence, index) => (
+        <li key={index}>{sentence.trim()}.</li>
+      ))
+  ) : (
+    <li>No description available</li>
+  )}
+</ul>
 
       {/* Apply Button */}
       <button className="mt-4 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">

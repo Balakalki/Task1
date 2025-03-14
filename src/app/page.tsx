@@ -26,8 +26,11 @@ export default function Home() {
           return acc;
         }, {} as Record<string, string>)
       ).toString();
-      
+
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/data?${queryParams}`);
+      if (!res.ok) {
+        throw new Error("Network response was not ok");
+      }
       const result: JobCard[] = await res.json();
       setData(result);
     } catch (error) {
@@ -38,16 +41,17 @@ export default function Home() {
   };
 
   useEffect(() => {
-    
     fetchJobs();
-  }, [JSON.stringify(filters)]); // Ensures `filters` changes trigger fetch only when values change
+  }, [filters]); // Triggers fetch only when filters change
 
   return (
     <>
-      <Header onSearch={setFilters}/>
+      <Header onSearch={setFilters} />
       <div className="p-4 flex justify-center sm:px-[7%]">
         {loading ? (
           <p>Loading jobs...</p>
+        ) : data.length === 0 ? (
+          <p>No jobs found</p> // Handle the case where no jobs are returned
         ) : (
           <ul className="flex flex-wrap gap-10">
             {data.map((job) => (
@@ -61,6 +65,7 @@ export default function Home() {
     </>
   );
 }
+
 
 
 
