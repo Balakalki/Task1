@@ -15,7 +15,7 @@ interface JobCardProps {
 }
 
 const JobCardCom: React.FC<JobCardProps> = ({ jobData }) => {
-  const timeAgo = dayjs.utc(jobData.created_at).add(5, 'hours').add(30, 'minutes').fromNow();
+  const timeAgo = dayjs.utc(jobData.created_at).subtract(5, 'hours').add(30, 'minutes').fromNow();
 
   return (
     <div className="max-w-80 bg-white shadow-lg rounded-2xl p-5 border border-gray-200">
