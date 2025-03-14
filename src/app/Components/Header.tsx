@@ -66,7 +66,7 @@ export default function Header({ onSearch }: SearchBoxProps) {
     <div className="w-full flex flex-col">
       {/* Top Header */}
       <div className="flex py-5  w-full justify-center">
-        <div className="px-10 items-center w-[60%] flex justify-between h-18 bg-white rounded-[2.5rem] shadow-[0px_0px_20px_rgba(0,0,0,0.3)]">
+        <div className="px-10 items-center w-[60%] flex justify-between h-14 bg-white rounded-[2.5rem] shadow-[0px_0px_20px_rgba(0,0,0,0.3)]">
           <img
             className="h-12 cursor-pointer"
             src="https://www.cybermindworks.com/images/cmwlogo.svg"
@@ -139,7 +139,7 @@ export default function Header({ onSearch }: SearchBoxProps) {
         </div>
 
         {/* Salary Range Slider (Single Line) */}
-        <div className="w-[25%] px-3 py-1 gap-4 flex flex-col">
+        <div className="w-[25%] px-3 py-1 gap-2 flex flex-col">
           <div className="flex justify-between font-semibold">
             <p>Salary Per Month</p>
             <p className="">₹{range[0]}k - ₹{range[1]}k</p>
