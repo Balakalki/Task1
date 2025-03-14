@@ -1,0 +1,33 @@
+.label {
+    position: absolute;
+    top: -30px; /* Move the label above the thumb */
+    height: auto;
+    background-color: transparent;
+    color: black;
+    font-size: 14px;
+    font-weight: bold;
+  }
+  
+  .thumb {
+    background-color: white ; /* Customize thumb color */
+    height: 18px;
+    width: 18px;
+    border-radius: 50%;
+    border: 6px solid black;
+    box-shadow: 0px 2px 5px rgb(255, 255, 255);
+  }
+  
+  /* Change the track (inactive part) color */
+  .track {
+    background-color: lightgray !important; /* Change to any color */
+    height: 4px;
+    border-radius: 5px;
+  }
+  
+  /* Change the bar (active filled part) color */
+  .bar {
+    background-color: black !important; /* Change active slider color */
+    height: 4px;
+    border-radius: 5px;
+  }
+  

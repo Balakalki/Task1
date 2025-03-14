@@ -1,103 +1,185 @@
-import Image from "next/image";
+"use client";
+import { useState, useEffect } from "react";
+import { JobCard } from "@/lib/types";
+import Header from "./Components/Header";
+import Card from "./Components/Card";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [data, setData] = useState<JobCard[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [filters, setFilters] = useState({
+    query: "",
+    location: "",
+    job_Type: "",
+    salary_Min: 0,
+    salary_Max: 1000000,
+  });
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+  const fetchJobs = async () => {
+    try {
+      setLoading(true);
+      const queryParams = new URLSearchParams(
+        Object.entries(filters).reduce((acc, [key, value]) => {
+          if (value !== "" && value !== 0) {
+            acc[key] = value.toString();
+          }
+          return acc;
+        }, {} as Record<string, string>)
+      ).toString();
+      
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/data?${queryParams}`);
+      const result: JobCard[] = await res.json();
+      setData(result);
+    } catch (error) {
+      console.error("Error fetching jobs:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    
+    fetchJobs();
+  }, [JSON.stringify(filters)]); // Ensures `filters` changes trigger fetch only when values change
+
+  return (
+    <>
+      <Header onSearch={setFilters}/>
+      <div className="p-4 flex justify-center sm:px-[7%]">
+        {loading ? (
+          <p>Loading jobs...</p>
+        ) : (
+          <ul className="flex flex-wrap gap-10">
+            {data.map((job) => (
+              <li key={job.job_id}>
+                <Card jobData={job} />
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// "use client";
+// import { useState, useEffect } from "react";
+// import { Job } from "@/lib/types";
+// import Header from "./Components/Header";
+// // import Head from "next/head";
+
+
+// // interface Data {
+// //   job_id: number;
+// //   job_title: string;
+// //   company_id:number;
+// //   job_type: string;
+// //   salary: number;
+// //   location_id: string;
+// //   job_description: string;
+// //   application_deadline: string;
+// //   requirements: string;
+// //   responsibilities: string;
+// //   created_at: string;
+// // }
+
+// export default function Home() {
+//   const [data, setData] = useState<Job[]>([]);
+//   const [isModalOpen, setIsModalOpen] = useState(false)
+//   const [loading, setLoading] = useState(true)
+//   const [formData, setFormData] = useState({
+//     job_Title: "",
+//     company_Name: "",
+//     job_Type: "",
+//     salary: "",
+//     city: "",
+//     job_Description: "",
+//     application_Deadline: "",
+//     requirements: "",
+//     responsibilities: "",
+//   });
+
+//   useEffect(() => {
+//     const fetchData = async () => {
+//       try {
+//         setLoading(true)
+//         const res = await fetch("http://localhost:3000/api/data");
+//         const result: Job[] = await res.json();
+//         // console.log("Fetched Data:", result);
+//         setData(result);
+//       } catch (error) {
+//         console.error("Error fetching data:", error);
+//       }finally {
+//         setLoading(false)
+//       }
+//     };
+
+//     fetchData();
+//   }, []);
+  
+
+//   useEffect(() => {
+//     // Construct query parameters
+//     const queryParams = new URLSearchParams();
+//     if (searchQuery) queryParams.append("query", searchQuery);
+//     if (location) queryParams.append("location", location);
+//     if (jobType) queryParams.append("jobType", jobType);
+//     if (salary) queryParams.append("salary", salary);
+
+//     if (queryParams.toString()) {
+//       fetch(`/api/search?${queryParams.toString()}`)
+//         .then((res) => res.json())
+//         .then((data) => console.log("Search Results:", data));
+//     }
+//   }, [searchQuery, location, jobType, salary]);
+
+//   // const fetchJobs = async () => {
+//   //   try {
+//   //     // setLoading(true)
+//   //     const jobsData = await getJobs()
+//   //     console.log("async ",jobsData);
+//   //     setData(jobsData)
+//   //   } catch (error) {
+//   //     console.error("Failed to fetch jobs:", error)
+//   //   } finally {
+//   //     // setLoading(false)
+//   //   }
+//   // }
+//   data.forEach((dat)=>{
+//     console.log("data is ", dat);
+//   })
+  
+//   // const handleJobCreated = () => {
+//   //   fetchJobs()
+//   //   setIsModalOpen(false)
+//   // }
+
+
+//   return (
+//     <>
+//       <Header onSearch={}/>
+//       <div className="text-red-500 bg-">
+//         <ul>
+//         {data.map((data) =>(
+//           <li key = {data.job_id}>{data.job_id} -- {data.job_title}</li>
+//         ))}
+//         </ul>
+//       </div>
+//     </>
+//   );
+// }
