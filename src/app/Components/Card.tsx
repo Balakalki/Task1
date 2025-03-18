@@ -1,7 +1,5 @@
 "use client";
 import React from "react";
-import Image from "next/image";
-import { Badge } from "@mantine/core";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { JobCard } from "@/lib/types";
@@ -15,55 +13,61 @@ interface JobCardProps {
 }
 
 const JobCardCom: React.FC<JobCardProps> = ({ jobData }) => {
-  const timeAgo = dayjs.utc(jobData.created_at).local().fromNow();
+  // const timeAgo = dayjs.utc(jobData.created_at).local().fromNow();
+  const timeAgo = dayjs.utc(jobData.created_at).local().fromNow().replace(" minutes", "m").replace(" minute", "m").replace(" hours", "h").replace(" hour", "h").replace(" days", "d").replace(" day", "d").replace("ago", "Ago");
+
 
   return (
-    <div className="max-w-80 bg-white shadow-lg rounded-2xl p-5 border border-gray-200">
+    <div className="w-80 h-[22rem] bg-white relative rounded-xl p-2 px-4 shadow border-gray-200">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex relative items-center justify-between">
         {jobData.company_logo && typeof jobData.company_logo === "string" ? (
-          <Image
-            src={jobData.company_logo ? `/${jobData.company_logo}` : "#"}
-            alt="img"
-            width={75}
-            height={40}
-            className="rounded-full"
-          />
+          <img className="w-24 object-cover" src={jobData.company_logo ? `/${jobData.company_logo}` : "#"} alt="" />
         ) : (
-          <div className="w-10 h-10 bg-gray-300 rounded-full"></div>
+          
+          <div className={`${jobData.company_logo === "companies/Tesla.png"? "w-20 h-20" : 'w-24 h-24'} flex items-center `}>
+            <div className=" w-[50] h-[50] bg-gray-300 shadow-md rounded-sm">
+            </div>
+          </div>
         )}
-        <Badge color="blue" size="sm">{timeAgo}</Badge>
+        <div className=" bg-[rgba(172,217,255,1)] absolute top-2 right-0 px-2 py-1 rounded-lg">{timeAgo}</div>
       </div>
 
       {/* Job Title */}
-      <h2 className="text-lg font-semibold mt-3">{jobData.job_title}</h2>
+      <h2 className="text-xl pb-1 font-semibold mt-3">{jobData.job_title}</h2>
 
       {/* Job Details */}
-      <div className="flex items-center text-gray-600 text-sm gap-2 mt-2">
-        <img src="./experience.png" alt="img" className="h-3 w-4" />
-        <span>{jobData.min_exp}-{jobData.max_exp} yr Exp</span>
-        <img src="./Onsite.png" alt="img" className="h-3 w-4" />
-        <span>{jobData.job_mode}</span>
-        <img src="./LPA.png" alt="img" className="h-3 w-4" />
-        <span className="bg-gray-200 px-2 py-1 rounded-md text-xs">{jobData.salary_max / 100000}LPA</span>
+      <div className="flex items-center text-gray-600 text-sm justify-between pr-4 mt-2">
+        <div className="flex items-center gap-1">
+          <img src="./experience.png" alt="img" className="h-4 w-5" />
+          <span className="font-semibold">{jobData.min_exp}-{jobData.max_exp} yr Exp</span>
+        </div>
+        <div className="flex items-center gap-1">
+          <img src="./Onsite.png" alt="img" className="h-4 w-5" />
+          <span className="font-semibold">{jobData.job_type}</span>
+        </div>
+        <div className="flex items-center gap-1">
+          <img src="./LPA.png" alt="img" className="h-4 w-5" />
+          <span className="font-semibold">{jobData.salary_max / 100000}LPA</span>
+        </div>
       </div>
 
       {/* Additional Job Details */}
-      <ul className="text-sm text-gray-700 mt-3 list-disc pl-5">
-  {jobData.job_description && typeof jobData.job_description === "string" && jobData.job_description.trim() !== "" ? (
-    jobData.job_description
-      .split(".")
-      .filter((sentence) => sentence.trim() !== "")
-      .map((sentence, index) => (
-        <li key={index}>{sentence.trim()}.</li>
-      ))
-  ) : (
-    <li>No description available</li>
-  )}
-</ul>
+      <ul className="text-sm h-[5.5rem] overflow-hidden text-gray-700 mt-3 list-disc pl-5">
+        {jobData.job_description && typeof jobData.job_description === "string" && jobData.job_description.trim() !== "" ? (
+          jobData.job_description
+            .split(".")
+            .filter((sentence) => sentence.trim() !== "")
+            .map((sentence, index) => (
+              <li key={index}>{sentence.trim()}.</li>
+            ))
+        ) : (
+          <li>No description available</li>
+        )}
+      </ul>
 
       {/* Apply Button */}
-      <button className="mt-4 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
+      <button className="mt-4 w-full bg-[rgba(0,170,255,1)] text-white py-2 rounded-lg transition">
         Apply Now
       </button>
     </div>

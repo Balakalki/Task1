@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { MantineProvider } from "@mantine/core";
 import { Analytics } from "@vercel/analytics/react"
@@ -8,6 +8,8 @@ const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
+
+const inter = Inter({subsets: ["latin"]});
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",

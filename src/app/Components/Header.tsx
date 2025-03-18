@@ -18,9 +18,9 @@ interface SearchBoxProps {
 
 export default function Header({ onSearch }: SearchBoxProps) {
   const menuItems = ["Home", "Find Talents", "About us", "Testimonials"];
-  const [range, setRange] = useState<[number, number]>([50, 80]);
+  const [range, setRange] = useState<[number, number]>([0, 500]);
   const [isModalOpen, setIsModalOpen] = useState(false)
-
+  
   
   const [filters, setFilters] = useState({
     query: "",
@@ -66,32 +66,42 @@ export default function Header({ onSearch }: SearchBoxProps) {
     <div className="w-full flex flex-col">
       {/* Top Header */}
       <div className="flex py-5  w-full justify-center">
-        <div className="px-10 items-center w-[60%] flex justify-between h-14 bg-white rounded-[2.5rem] shadow-[0px_0px_20px_rgba(0,0,0,0.3)]">
+        <div className="px-10 items-center flex h-18 bg-white rounded-[2.5rem] shadow-[0px_0px_20px_rgba(0,0,0,0.3)]">
+          <div className="w-20">
           <img
             className="h-12 cursor-pointer"
             src="https://www.cybermindworks.com/images/cmwlogo.svg"
             alt=""
           />
+          </div>
           {menuItems.map((item, ind) => (
-            <li
-              className="list-none cursor-pointer font-semibold hover:text-blue-600"
-              key={ind}
-            >
+          <div
+            key={ind}
+            className="px-7 py-2 font-semibold rounded-2xl transition-all duration-300 
+                      hover:shadow-[0_3px_2px_rgba(0,0,0,0.1)] 
+                      hover:scale-100 hover:translate-y-1 hover:translate-x-1 hover:bg-white will-change-transform transform-gpu"
+              >
               {item}
-            </li>
+            </div>
           ))}
-          <Button
-            className="px-6 py-2 text-white text-sm rounded-full"
-            style={{
-              background:
-                "linear-gradient(to bottom, rgba(161, 40, 255, 1), rgba(97, 0, 173, 1))",
-              borderRadius: "9999px",
-              border: "none",
-            }}
-            onClick={() => setIsModalOpen(true)}
-          >
-            Create Jobs
-          </Button>
+
+          <button 
+          style={{
+            background:
+              "linear-gradient(to bottom, rgba(161, 40, 255, 1), rgba(97, 0, 173, 1))",
+            borderRadius: "9999px",
+            border: "none",
+          }}
+          onClick={() => setIsModalOpen(true)}
+          className="ml-6 relative hover:scale-105  w-32 h-10 overflow-hidden rounded-lg bg-blue-600 text-white font-semibold group">
+  <span className="absolute inset-0 flex items-center justify-center transition-transform duration-300 group-hover:-translate-y-full">
+    Create Job
+  </span>
+  <span className="absolute inset-0 flex items-center justify-center transition-transform duration-300 translate-y-full group-hover:translate-y-0">
+        Login
+  </span>
+</button>
+
         </div>
       </div>
 
@@ -147,9 +157,9 @@ export default function Header({ onSearch }: SearchBoxProps) {
           <RangeSlider
             value={range}
             onChange={handleSalaryChange}
-            min={10}
+            min={0}
             max={500}
-            step={1}
+            step={10}
             classNames={{
               thumb: classes.thumb,
               label: classes.label,

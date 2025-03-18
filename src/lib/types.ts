@@ -43,6 +43,7 @@ job_title: string
 min_exp: number
 max_exp: number
 job_mode: string
+job_type: string
 salary_max: number
 job_description: string
 }

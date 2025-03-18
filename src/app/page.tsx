@@ -47,19 +47,19 @@ export default function Home() {
   return (
     <>
       <Header onSearch={setFilters} />
-      <div className="p-4 flex justify-center">
+      <div className="p-4 bg-[rgba(251,251,255,1)] flex justify-center">
         {loading ? (
           <p>Loading jobs...</p>
         ) : data.length === 0 ? (
           <p>No jobs found</p> // Handle the case where no jobs are returned
         ) : (
-          <ul className="flex pl-11 flex-wrap gap-10 pt-10">
+          <div className="grid [@media(min-width:1330px)]:grid-cols-4 gap-5 [@media(min-width:1000px)]:grid-cols-3  sm:grid-cols-2 gird-cols-1 pt-10">
             {data.map((job) => (
-              <li key={job.job_id}>
+              <div key={job.job_id}>
                 <Card jobData={job} />
-              </li>
+              </div>
             ))}
-          </ul>
+          </div>
         )}
       </div>
     </>

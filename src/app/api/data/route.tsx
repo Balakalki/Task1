@@ -22,6 +22,7 @@ export async function GET(req: NextRequest) {
         c.company_logo,
         j.salary_max,
         j.job_mode,
+        j.job_type,
         l.city, 
         j.application_deadline, 
         j.job_description, 
