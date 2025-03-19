@@ -1,7 +1,9 @@
 "use client"
 import { useEffect, useState } from "react";
-import { Button, TextInput, Select, Modal, Grid, Textarea } from "@mantine/core";
+import { Button, Modal, Grid } from "@mantine/core";
 import { JobPost } from "@/lib/types";
+import CustomDropdown from "./CustomDropdown";
+import { fileURLToPath } from "url";
 
 async function createJob(jobData: JobPost) {
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/data`, {
@@ -38,6 +40,8 @@ export default function CreateJobModal({ onClose, isPosted }: CreateJobModalProp
   const [salaryErrorMessage, setSalaryErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [focusedField, setFocusedField] = useState<string | null>(null);
+  const Locations = [{label:"Chennai", value:"Chennai"}, {label:"Hyderabad", value:"Hyderabad"}, {label:"Delhi", value:"Delhi"}, {label:"Benguluru", value:"Benguluru"}];
+  const JobTypes = [{label: "Full-time", value:"Full Time"}, {label:"Part-time", value:"Part Time"}, {label:"Contract", value:"Contract"}, {label:"Internship", value:"Internship"}];
 
   useEffect(() => {
     const savedDraft = localStorage.getItem("jobFormData");
@@ -54,9 +58,25 @@ export default function CreateJobModal({ onClose, isPosted }: CreateJobModalProp
     if(!formData[fieldName]){
       setFocusedField("");
     }
+    else{
+      if(fieldName === "location"){
+        setFocusedField("");
+      }
+      else if(fieldName === "job_type"){
+        setFocusedField("");
+      }
+    }
   }
 
   const handleChange = (name: string, value: any) => {
+    if(name === 'job_type'){
+      if(value === 'Full Time'){
+        value = "Full-time"
+      }
+      else if(value === 'Part Time'){
+        value = 'Part-time'
+      }
+    }
     if((name === "salary_min" || name === "salary_max") && value < 0){
       setSalaryErrorMessage("salary can not be negative");
     }
@@ -71,6 +91,14 @@ export default function CreateJobModal({ onClose, isPosted }: CreateJobModalProp
       setIsSubmitting(true);
       setErrorMessage("");
       setSuccessMessage("");
+      setSalaryErrorMessage("");
+
+      if (isDraft) {
+        localStorage.setItem("jobFormData", JSON.stringify(formData)); // Save draft
+        // console.log(formData);
+        alert("Draft saved successfully");
+        return;
+      }
 
       const jobData = {
         ...formData,
@@ -98,10 +126,6 @@ export default function CreateJobModal({ onClose, isPosted }: CreateJobModalProp
           setErrorMessage("slary min must be less than salary max");
           return;
         }
-        if (isDraft) {
-          localStorage.setItem("jobFormData", JSON.stringify(jobData)); // ✅ Save draft
-          alert("Draft saved successfully");
-        } else {
           await createJob(jobData);
           localStorage.removeItem("jobFormData");
           setSuccessMessage("Job posted Successfully");
@@ -121,7 +145,6 @@ export default function CreateJobModal({ onClose, isPosted }: CreateJobModalProp
             requirements: "as per job description",
             responsibilities: "complete tasks",
           });
-        }
       }
     } catch (error) {
       console.error("Failed to create job:", error);
@@ -168,7 +191,7 @@ export default function CreateJobModal({ onClose, isPosted }: CreateJobModalProp
             <label className={`text-[18px] font-semibold ${formData.company_name || focusedField === "company_name"? 'text-black':'text-[rgba(0,0,0,0.5)]'}`}>Company Name</label>
             <input type="text"
               name="company_name"
-              value={formData.company_name}
+              value={formData.company_name ?? ""}
               onFocus={() => handleFocus("company_name")}
               onBlur={() => handleBlur("company_name")}
               placeholder="Amazon, Tesla, Swiggy"
@@ -179,68 +202,29 @@ export default function CreateJobModal({ onClose, isPosted }: CreateJobModalProp
 
         <Grid.Col span={6}>
           <label className={`text-[18px] font-semibold ${formData.location || focusedField === "location"? 'text-black':'text-[rgba(0,0,0,0.5)]'}`}>Location</label>
-          <div className="relative">
-            <select
-            value={formData.location}
-            onChange={(e) => handleChange("location", e.target.value)}
+          <div className={`border rounded-lg ${focusedField == "location"?'outline-2':''} ${errorMessage && !formData.location && focusedField !== "location"? 'border-red-600':'border-[rgba(0,0,0,0.2)]'} h-[45] `}>
+            <CustomDropdown 
+            placeholder="Choose Preferred Location "
+            val = {formData.location}
+            options={Locations}
+            onSelect={(value) => handleChange("location", value)}
             onFocus={() => handleFocus("location")}
-            onBlur={() => handleBlur("location")}
-            className={`w-[100%] appearance-none border ${errorMessage && !formData.location? 'border-red-600':'border-[rgba(0,0,0,0.2)]'} h-[45] px-4 text-lg rounded-lg ${formData.location === "" ? "text-gray-400" : "text-black"
-              }`}
-          >
-            <option value="" disabled selected>
-              Choose Preferred Location
-            </option>
-            <option className="text-black w-full" value="Hyderabad">
-              Hyderabad
-            </option>
-            <option className="text-black w-full" value="Chennai">
-              Chennai
-            </option>
-            <option className="text-black w-full" value="Benguluru">
-              Benguluru
-            </option>
-            <option className="text-black w-full" value="Delhi">
-              Delhi
-            </option>
-          </select>
-          <div className="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
-            <img src="/DropDownArrow.png" alt="" />
-          </div>
+            onBlur = {() => handleBlur("location")}
+            />
           </div>
         </Grid.Col>
 
         <Grid.Col span={6}>
           <label className={`text-[18px] font-semibold ${formData.job_type || focusedField === "job_type"? 'text-black':'text-[rgba(0,0,0,0.5)]'}`}>Job Type</label>
-          <div className="relative">
-          <select
-            required
-            value={formData.job_type}
-            onChange={(e) => handleChange("job_type", e.target.value)}
-            onFocus={() => handleFocus("job_type")}
-            onBlur={() => handleBlur("job_type")}
-            className={`w-[100%] border appearance-none rounded-lg ${errorMessage && !formData.job_type? 'border-red-600':'border-[rgba(0,0,0,0.2)]'} h-[45] px-4 text-lg ${formData.job_type === "" ? "text-gray-400" : "text-black"
-              }`}
-          >
-            <option value="" disabled selected>
-              Enter Job Type
-            </option>
-            <option className="text-black" value="Full-time">
-              Full Time
-            </option>
-            <option className="text-black" value="Part-time">
-              Part Time
-            </option>
-            <option className="text-black" value="Contract">
-              Contract
-            </option>
-            <option className="text-black" value="Internship">
-              Internship
-            </option>
-          </select>
-          <div className="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
-            <img src="/DropDownArrow.png" alt="" />
-          </div>
+          <div className={`border rounded-lg ${focusedField == "job_type"?'outline-2':''} ${errorMessage && !formData.job_type && focusedField !== "job_type" ? 'border-red-600':'border-[rgba(0,0,0,0.2)]'} h-[45] `}>
+          <CustomDropdown 
+          placeholder="Full Time  "
+          val={formData.job_type}
+          options={JobTypes}
+          onSelect={(value) => handleChange("job_type", value)}
+          onBlur={() => handleBlur("job_type")}
+          onFocus={() => handleFocus("job_type")}
+          />
           </div>
         </Grid.Col>
 
