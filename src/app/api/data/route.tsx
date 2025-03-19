@@ -21,7 +21,6 @@ export async function GET(req: NextRequest) {
         j.job_title, 
         c.company_logo,
         j.salary_max,
-        j.job_mode,
         j.job_type,
         l.city, 
         j.application_deadline, 
@@ -98,12 +97,11 @@ export async function POST(req: NextRequest) {
       job_description,
       min_exp,
       max_exp,
-      job_mode,
       responsibilities,
       requirements
     } = body;
 
-    if (!job_title || !company_name || !location || !job_type || !job_mode  || min_exp == null || max_exp == null || !application_deadline || !job_description) {
+    if (!job_title || !company_name || !location || !job_type  || min_exp == null || max_exp == null || !application_deadline || !job_description) {
       return NextResponse.json({ error: "All fields are required" }, { status: 400 });
     }
     // Fetch or Insert Company
@@ -138,13 +136,12 @@ export async function POST(req: NextRequest) {
 
     // Insert Job
     await query(
-      `INSERT INTO jobs (job_title, company_location_id, job_type, job_mode, salary_min, salary_max, application_deadline, job_description, min_exp, max_exp,responsibilities, requirements)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`,
+      `INSERT INTO jobs (job_title, company_location_id, job_type, salary_min, salary_max, application_deadline, job_description, min_exp, max_exp,responsibilities, requirements)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`,
       [
         job_title,
         company_location_id,
         job_type,
-        job_mode,
         salary_min,
         salary_max,
         application_deadline,

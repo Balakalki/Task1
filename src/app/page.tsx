@@ -39,6 +39,11 @@ export default function Home() {
       setLoading(false);
     }
   };
+  const OnPost = (onpost:boolean) =>{
+    if(onpost){
+      fetchJobs();
+    }
+  }
 
   useEffect(() => {
     fetchJobs();
@@ -46,7 +51,7 @@ export default function Home() {
 
   return (
     <>
-      <Header onSearch={setFilters} />
+      <Header onSearch={setFilters} onPosted = {OnPost}/>
       <div className="p-4 bg-[rgba(251,251,255,1)] flex justify-center">
         {loading ? (
           <p>Loading jobs...</p>

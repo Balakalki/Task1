@@ -30,7 +30,6 @@ export interface JobPost{
   job_description: string
   min_exp: number
   max_exp: number
-  job_mode: string
   responsibilities: string
   requirements: string
 }

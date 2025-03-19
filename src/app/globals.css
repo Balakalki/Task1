@@ -9,6 +9,24 @@
   --font-secondary: "Nunito Sans", Arial, Helvetica, sans-serif;
 }
 
+/* Remove default dd-mm-yyyy placeholder */
+input[type="date"]:not(:focus):not([value])::-webkit-datetime-edit {
+  color: transparent;
+}
+
+
+select option {
+  background-color: #f3f4f6 !important; /* Tailwind gray-100 */
+  color: black !important;
+}
+
+
+/* Remove the default calendar icon */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
