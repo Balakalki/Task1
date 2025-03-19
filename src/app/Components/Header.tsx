@@ -85,7 +85,7 @@ export default function Header({ onSearch, onPosted }: SearchBoxProps) {
             </div>
           ))}
 
-          <div className="ml-6 group hover:bg-gray-100 rounded-md py-1 flex items-center px-2">
+          <div className="ml-6 group cursor-pointer hover:bg-gray-100 rounded-md py-1 flex items-center px-2">
             <button
               style={{
                 background:
@@ -94,7 +94,7 @@ export default function Header({ onSearch, onPosted }: SearchBoxProps) {
                 border: "none",
               }}
               onClick={() => setIsModalOpen(true)}
-              className={`relative group-hover:scale-105 w-32 h-10 overflow-hidden rounded-lg bg-blue-600 text-white font-semibold`}
+              className={`relative cursor-pointer group-hover:scale-105 w-32 h-10 overflow-hidden rounded-lg bg-blue-600 text-white font-semibold`}
             >
               <span className="absolute inset-0 flex items-center justify-center transition-transform duration-300 group-hover:-translate-y-full">
                 Create Job
@@ -133,11 +133,6 @@ export default function Header({ onSearch, onPosted }: SearchBoxProps) {
               className={`w-[90%] pl-4 appearance-none ${filters.location == "" ? "text-black/50" : "text-black"}`}
               onChange={handleChange}
             >
-              {/* <option value="">Location</option>
-            <option className="!text-black" value="Full-Time">Chennai</option>
-            <option className="!text-black" value="Part-Time">Hyderabad</option>
-            <option className="!text-black" value="Internship">Internship</option>
-            <option className="!text-black" value="contract">contract</option> */}
               <option value="">Preferred Location</option>
               <option className="text-black" value="Hyderabad">Hyderabad</option>
               <option className="text-black" value="Chennai">Chennai</option>
