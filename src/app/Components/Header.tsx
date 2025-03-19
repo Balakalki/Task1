@@ -120,6 +120,7 @@ export default function Header({ onSearch, onPosted }: SearchBoxProps) {
             placeholder="Search By Job Title, Role"
             value={filters.query}
             onChange={handleChange}
+            className="text-[16px] outline-none p-4 pb-2  mb-2 border-[rgba(0,0,0,0.1)] focus:border-b-2"
           />
         </div>
 
