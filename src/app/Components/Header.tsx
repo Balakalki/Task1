@@ -66,7 +66,7 @@ export default function Header({ onSearch, onPosted }: SearchBoxProps) {
     <div className="w-full flex flex-col">
       {/* Top Header */}
       <div className="flex py-5  w-full justify-center">
-        <div className="px-10 items-center flex h-18 bg-white rounded-[2.5rem] shadow-[0px_0px_20px_rgba(0,0,0,0.1)]">
+        <div className="px-10 items-center  flex h-18 bg-white rounded-[2.5rem] shadow-[0px_0px_20px_rgba(0,0,0,0.1)]">
           <div className="w-20">
             <img
               className="h-12 cursor-pointer"
@@ -77,7 +77,7 @@ export default function Header({ onSearch, onPosted }: SearchBoxProps) {
           {menuItems.map((item, ind) => (
             <div
               key={ind}
-              className="px-7 py-2 font-semibold rounded-2xl transition-all duration-300 
+              className="px-7 cursor-pointer py-2 font-semibold rounded-2xl transition-all duration-300 
                       hover:shadow-[0_3px_2px_rgba(0,0,0,0.1)] 
                       hover:scale-100 hover:translate-y-1 hover:translate-x-1 hover:bg-white will-change-transform transform-gpu"
             >
@@ -129,8 +129,8 @@ export default function Header({ onSearch, onPosted }: SearchBoxProps) {
           <div className="w-full relative">
             <select
               name="location"
-              value={filters.job_Type || ""}
-              className={`w-[90%] pl-4 appearance-none ${filters.job_Type == "" ? "text-black/50" : "text-black"}`}
+              value={filters.location || ""}
+              className={`w-[90%] pl-4 appearance-none ${filters.location == "" ? "text-black/50" : "text-black"}`}
               onChange={handleChange}
             >
               {/* <option value="">Location</option>
@@ -138,21 +138,11 @@ export default function Header({ onSearch, onPosted }: SearchBoxProps) {
             <option className="!text-black" value="Part-Time">Hyderabad</option>
             <option className="!text-black" value="Internship">Internship</option>
             <option className="!text-black" value="contract">contract</option> */}
-              <option value="">
-                Preferred Location
-              </option>
-              <option className="text-black" value="Hyderabad">
-                Hyderabad
-              </option>
-              <option className="text-black" value="Chennai">
-                Chennai
-              </option>
-              <option className="text-black" value="Benguluru">
-                Benguluru
-              </option>
-              <option className="text-black" value="Delhi">
-                Delhi
-              </option>
+              <option value="">Preferred Location</option>
+              <option className="text-black" value="Hyderabad">Hyderabad</option>
+              <option className="text-black" value="Chennai">Chennai</option>
+              <option className="text-black" value="Benguluru">Benguluru</option>
+              <option className="text-black" value="Delhi">Delhi</option>
             </select>
             <img src="/Down 2.png" alt="" className="absolute right-8 w-3 top-3"
               style={{ pointerEvents: "none" }} />
