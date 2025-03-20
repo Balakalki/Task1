@@ -1,10 +1,11 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { RangeSlider } from "@mantine/core";
 import "@mantine/core/styles.css";
 import CreateJobModal from "./Create_job_modal";
 import classes from "./SliderLabel.module.css";
 import CustomDropdown from "./CustomDropdown";
+import { debounce } from "@mui/material";
 
 interface SearchBoxProps {
   onSearch: (filters: {
@@ -15,6 +16,13 @@ interface SearchBoxProps {
     salary_Max: number;
   }) => void;
   onPosted: (status: boolean) => void;
+}
+interface Filters{
+    query: string;
+    location: string;
+    job_Type: string;
+    salary_Min: number;
+    salary_Max: number;
 }
 
 export default function Header({ onSearch, onPosted }: SearchBoxProps) {
@@ -30,7 +38,7 @@ export default function Header({ onSearch, onPosted }: SearchBoxProps) {
     location: "",
     job_Type: "",
     salary_Min: 0,
-    salary_Max: 1100000,
+    salary_Max: 500000,
   });
   const handleChange = (name: string, value: string) => {
     if(name === "location" && value === "All Locations"){
@@ -51,6 +59,12 @@ export default function Header({ onSearch, onPosted }: SearchBoxProps) {
     }));
   };
   
+  const debouncedSetFilters = useCallback(
+    debounce((updatedFilters: (prev: Filters) => Filters) => {
+      setFilters(updatedFilters);
+    }, 300), 
+    []
+  );
   const handleSalaryChange = (newRange: [number, number]) => {
     const [newMin, newMax] = newRange;
 
@@ -59,7 +73,7 @@ export default function Header({ onSearch, onPosted }: SearchBoxProps) {
     const updatedSalaryMax = newMax <= updatedSalaryMin ? updatedSalaryMin + 1 : newMax;
 
     // Update the filters state with new salary values
-    setFilters((prev) => ({
+    debouncedSetFilters((prev) => ({
       ...prev,
       salary_Min: updatedSalaryMin,
       salary_Max: updatedSalaryMax,
