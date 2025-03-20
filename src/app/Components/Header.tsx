@@ -4,6 +4,7 @@ import { RangeSlider } from "@mantine/core";
 import "@mantine/core/styles.css";
 import CreateJobModal from "./Create_job_modal";
 import classes from "./SliderLabel.module.css";
+import CustomDropdown from "./CustomDropdown";
 
 interface SearchBoxProps {
   onSearch: (filters: {
@@ -20,6 +21,8 @@ export default function Header({ onSearch, onPosted }: SearchBoxProps) {
   const menuItems = ["Home", "Find Talents", "About us", "Testimonials"];
   const [range, setRange] = useState<[number, number]>([0, 500]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const Locations = [{label:"All Locations", value:"All Locations"},{label:"Chennai", value:"Chennai"}, {label:"Hyderabad", value:"Hyderabad"}, {label:"Delhi", value:"Delhi"}, {label:"Benguluru", value:"Benguluru"}];
+  const JobTypes = [{label:"All Job Types", value:"All Job Types"}, {label: "Full-time", value:"Full Time"}, {label:"Part-time", value:"Part Time"}, {label:"Contract", value:"Contract"}, {label:"Internship", value:"Internship"}];
 
 
   const [filters, setFilters] = useState({
@@ -29,18 +32,25 @@ export default function Header({ onSearch, onPosted }: SearchBoxProps) {
     salary_Min: 0,
     salary_Max: 1100000,
   });
-
-  const handleChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    const { name, value } = event.target;
-
-    setFilters((prev) => {
-      let updatedFilters = { ...prev, [name]: value };
-
-      return updatedFilters;
-    });
+  const handleChange = (name: string, value: string) => {
+    if(name === "location" && value === "All Locations"){
+      value = "";
+    }
+    else if(name === "job_Type"){
+      if(value === "All Job Types"){
+        value = "";
+      }else if(value === "Full Time"){
+        value = "Full-time";
+      }else if(value === "Part Time"){
+        value = "Part-time";
+      }
+    }
+    setFilters((prev) => ({
+      ...prev,
+      [name]: value, 
+    }));
   };
+  
   const handleSalaryChange = (newRange: [number, number]) => {
     const [newMin, newMax] = newRange;
 
@@ -119,7 +129,7 @@ export default function Header({ onSearch, onPosted }: SearchBoxProps) {
             name="query"
             placeholder="Search By Job Title, Role"
             value={filters.query}
-            onChange={handleChange}
+            onChange={(e) => handleChange("query", e.target.value)}
             className="text-[16px] outline-none p-4 pb-2  mb-2 border-[rgba(0,0,0,0.1)] focus:border-b-2"
           />
         </div>
@@ -128,20 +138,12 @@ export default function Header({ onSearch, onPosted }: SearchBoxProps) {
         <div className="w-[25%] px-3 py-1 border-r-2 border-slate-200 flex items-center gap-6">
           <img src="./location.png" className="h-6 w-5"></img>
           <div className="w-full relative">
-            <select
-              name="location"
-              value={filters.location || ""}
-              className={`w-[90%] pl-4 appearance-none ${filters.location == "" ? "text-black/50" : "text-black"}`}
-              onChange={handleChange}
-            >
-              <option value="">Preferred Location</option>
-              <option className="text-black" value="Hyderabad">Hyderabad</option>
-              <option className="text-black" value="Chennai">Chennai</option>
-              <option className="text-black" value="Benguluru">Benguluru</option>
-              <option className="text-black" value="Delhi">Delhi</option>
-            </select>
-            <img src="/Down 2.png" alt="" className="absolute right-8 w-3 top-3"
-              style={{ pointerEvents: "none" }} />
+            <CustomDropdown 
+            onSelect={(value) => handleChange("location", value)}
+            placeholder="Preferred Location"
+            image="/Down 2.png"
+            options={Locations}
+            />
           </div>
         </div>
 
@@ -149,20 +151,12 @@ export default function Header({ onSearch, onPosted }: SearchBoxProps) {
         <div className="w-[25%] px-3 py-1 border-r-2 border-slate-200 flex items-center gap-6">
           <img className="h-5 w-5" src="./job_type.png"></img>
           <div className="w-full relative">
-            <select
-              name="job_Type"
-              value={filters.job_Type || ""}
-              className={`w-[90%] pl-4 appearance-none ${filters.job_Type == "" ? "text-black/50" : "text-black"}`}
-              onChange={handleChange}
-            >
-              <option value="">Job Type</option>
-              <option className="!text-black" value="Full-Time">Full Time</option>
-              <option className="!text-black" value="Part-Time">Part Time</option>
-              <option className="!text-black" value="Internship">Internship</option>
-              <option className="!text-black" value="contract">contract</option>
-            </select>
-            <img src="/Down 2.png" alt="" className="absolute right-8 w-3 top-3"
-              style={{ pointerEvents: "none" }} />
+            <CustomDropdown 
+            placeholder="Job Type"
+            options={JobTypes}
+            image="/Down 2.png"
+            onSelect={(value) => handleChange("job_Type", value)}
+            />
           </div>
         </div>
 

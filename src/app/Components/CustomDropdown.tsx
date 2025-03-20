@@ -7,13 +7,14 @@ interface DropdownProps {
     label : string,
     value : string
   }[];
+  image: string;
   onSelect: (selectedItem: string) => void;
   onFocus?: () => void;
   onBlur?: () => void;
   val?: string;
 }
 
-const CustomDropdown = ({placeholder,val, options, onSelect, onFocus, onBlur }: DropdownProps) => {
+const CustomDropdown = ({placeholder, image, val, options, onSelect, onFocus, onBlur }: DropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState(placeholder);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -62,13 +63,13 @@ const CustomDropdown = ({placeholder,val, options, onSelect, onFocus, onBlur }: 
   }, [isOpen]);
 
   return (
-    <div className="relative w-[20.5rem]" ref={dropdownRef}>
+    <div className="relative w-full" ref={dropdownRef}>
       <button
         className={`w-full h-[45] rounded-lg ${selected === placeholder? 'text-gray-400':'text-black'} font-bold py-2 px-4 flex justify-between items-center`}
         onClick={toggleDropdown}
       >
         {selected}
-        <img src="/DropDownArrow.png" alt=">" />
+        <img src={image} alt=">" />
       </button>
       {isOpen && (
         <ul className="absolute z-20 w-full bg-white text-black shadow-[0px_0px_20px_rgba(0,0,0,0.1)] border-[rgba(0,0,0,0.1)] rounded-lg mt-2">

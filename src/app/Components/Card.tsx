@@ -14,7 +14,7 @@ interface JobCardProps {
 
 const JobCardCom: React.FC<JobCardProps> = ({ jobData }) => {
   // const timeAgo = dayjs.utc(jobData.created_at).local().fromNow();
-  const timeAgo = dayjs.utc(jobData.created_at).local().fromNow().replace(" minutes", "m").replace(" minute", "m").replace(" hours", "h").replace(" hour", "h").replace(" days", "d").replace(" day", "d").replace("ago", "Ago");
+  const timeAgo = dayjs.utc(jobData.created_at).local().fromNow().replace(" minutes", "m").replace(" minute", "m").replace(" hours", "h").replace(" hour", "h").replace(" days", "d").replace(" day", "d").replace("ad","1d").replace("anh","1h").replace("am","1m").replace("ago", "Ago");
 
 
   return (

@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { Button, Modal, Grid } from "@mantine/core";
 import { JobPost } from "@/lib/types";
 import CustomDropdown from "./CustomDropdown";
-import { fileURLToPath } from "url";
 
 async function createJob(jobData: JobPost) {
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/data`, {
@@ -205,6 +204,7 @@ export default function CreateJobModal({ onClose, isPosted }: CreateJobModalProp
           <div className={`border rounded-lg ${focusedField == "location"?'outline-2':''} ${errorMessage && !formData.location && focusedField !== "location"? 'border-red-600':'border-[rgba(0,0,0,0.2)]'} h-[45] `}>
             <CustomDropdown 
             placeholder="Choose Preferred Location "
+            image="/DropDownArrow.png"
             val = {formData.location}
             options={Locations}
             onSelect={(value) => handleChange("location", value)}
@@ -219,6 +219,7 @@ export default function CreateJobModal({ onClose, isPosted }: CreateJobModalProp
           <div className={`border rounded-lg ${focusedField == "job_type"?'outline-2':''} ${errorMessage && !formData.job_type && focusedField !== "job_type" ? 'border-red-600':'border-[rgba(0,0,0,0.2)]'} h-[45] `}>
           <CustomDropdown 
           placeholder="Full Time  "
+          image = "/DropDownArrow.png"
           val={formData.job_type}
           options={JobTypes}
           onSelect={(value) => handleChange("job_type", value)}
