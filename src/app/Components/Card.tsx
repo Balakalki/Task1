@@ -34,7 +34,7 @@ const JobCardCom: React.FC<JobCardProps> = ({ jobData }) => {
       </div>
 
       {/* Job Title */}
-      <h2 className="text-xl cursor-pointer hover:text-blue-900 pb-1 font-semibold mt-3">{jobData.job_title}</h2>
+      <h2 className="text-xl w-fit cursor-pointer hover:text-blue-900 pb-1 font-semibold mt-3">{jobData.job_title}</h2>
 
       {/* Job Details */}
       <div className="flex items-center text-gray-600 text-sm justify-between pr-4 mt-2">
