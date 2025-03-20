@@ -281,7 +281,7 @@ export default function CreateJobModal({ onClose, isPosted }: CreateJobModalProp
         </Grid.Col>
 
         <Grid.Col span={6}>
-          <div className="flex relative flex-col">
+          <div className="flex cursor-pointer relative flex-col">
             <label className={`text-[18px] font-semibold ${formData.application_deadline || focusedField === "application_deadline"? 'text-black':'text-[rgba(0,0,0,0.5)]'}`}>Application Deadline</label>
             <input type="date"
               name="application_deadline"
@@ -292,7 +292,7 @@ export default function CreateJobModal({ onClose, isPosted }: CreateJobModalProp
                 handleFocus("application_deadline");
               }}
               onBlur={() => handleBlur("application_deadline")}
-              className={`border h-[45] text-[18px] p-2 rounded-lg ${formData.application_deadline || focusedField === "application_deadline"? 'text-black':'text-[rgba(0,0,0,0)]'} ${errorMessage && !formData.application_deadline? 'border-red-600':'border-[rgba(0,0,0,0.2)]'}`} 
+              className={`border cursor-pointer h-[45] text-[18px] p-2 rounded-lg ${formData.application_deadline || focusedField === "application_deadline"? 'text-black':'text-[rgba(0,0,0,0)]'} ${errorMessage && !formData.application_deadline? 'border-red-600':'border-[rgba(0,0,0,0.2)]'}`} 
               style={{appearance:"none"}}/>
               <img src="/DateIcon.png" className="h-4 w-4 absolute top-11 right-4" alt="" />
           </div>

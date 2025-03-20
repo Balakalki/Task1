@@ -30,11 +30,11 @@ const JobCardCom: React.FC<JobCardProps> = ({ jobData }) => {
             </div>
           </div>
         )}
-        <div className=" bg-[rgba(172,217,255,1)] absolute top-2 right-0 px-2 py-1 rounded-lg">{timeAgo}</div>
+        <div className=" bg-[rgba(172,217,255,1)] cursor-default absolute top-2 right-0 px-2 py-1 rounded-lg">{timeAgo}</div>
       </div>
 
       {/* Job Title */}
-      <h2 className="text-xl pb-1 font-semibold mt-3">{jobData.job_title}</h2>
+      <h2 className="text-xl cursor-pointer hover:text-blue-900 pb-1 font-semibold mt-3">{jobData.job_title}</h2>
 
       {/* Job Details */}
       <div className="flex items-center text-gray-600 text-sm justify-between pr-4 mt-2">
@@ -67,7 +67,7 @@ const JobCardCom: React.FC<JobCardProps> = ({ jobData }) => {
       </ul>
 
       {/* Apply Button */}
-      <button className="mt-4 w-full bg-[rgba(0,170,255,1)] text-white py-2 rounded-lg transition">
+      <button className="mt-4 w-full cursor-pointer bg-[rgba(0,170,255,1)] text-white py-2 rounded-lg transition">
         Apply Now
       </button>
     </div>

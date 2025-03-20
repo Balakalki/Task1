@@ -63,9 +63,9 @@ const CustomDropdown = ({placeholder, image, val, options, onSelect, onFocus, on
   }, [isOpen]);
 
   return (
-    <div className="relative w-full" ref={dropdownRef}>
+    <div className="relative cursor-pointer w-full" ref={dropdownRef}>
       <button
-        className={`w-full h-[45] rounded-lg ${selected === placeholder? 'text-gray-400':'text-black'} font-bold py-2 px-4 flex justify-between items-center`}
+        className={`w-full cursor-pointer h-[45] rounded-lg ${selected === placeholder? 'text-gray-400':'text-black'} font-bold py-2 px-4 flex justify-between items-center`}
         onClick={toggleDropdown}
       >
         {selected}
