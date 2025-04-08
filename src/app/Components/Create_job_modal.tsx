@@ -1,5 +1,5 @@
 "use client"
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Button, Modal, Grid } from "@mantine/core";
 import { JobPost } from "@/lib/types";
 import CustomDropdown from "./CustomDropdown";
@@ -41,6 +41,7 @@ export default function CreateJobModal({ onClose, isPosted }: CreateJobModalProp
   const [focusedField, setFocusedField] = useState<string | null>(null);
   const Locations = [{label:"Chennai", value:"Chennai"}, {label:"Hyderabad", value:"Hyderabad"}, {label:"Delhi", value:"Delhi"}, {label:"Benguluru", value:"Benguluru"}];
   const JobTypes = [{label: "Full-time", value:"Full Time"}, {label:"Part-time", value:"Part Time"}, {label:"Contract", value:"Contract"}, {label:"Internship", value:"Internship"}];
+  const dateInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const savedDraft = localStorage.getItem("jobFormData");
@@ -293,8 +294,9 @@ export default function CreateJobModal({ onClose, isPosted }: CreateJobModalProp
               }}
               onBlur={() => handleBlur("application_deadline")}
               className={`border cursor-pointer h-[45] text-[18px] p-2 rounded-lg ${formData.application_deadline || focusedField === "application_deadline"? 'text-black':'text-[rgba(0,0,0,0)]'} ${errorMessage && !formData.application_deadline? 'border-red-600':'border-[rgba(0,0,0,0.2)]'}`} 
-              style={{appearance:"none"}}/>
-              <img src="/DateIcon.png" className="h-4 w-4 absolute top-11 right-4" alt="" />
+              style={{appearance:"none"}}
+              ref={dateInputRef}/>
+              <img src="/DateIcon.png" className="h-4 w-4 absolute top-11 right-4" alt="" onClick={() => dateInputRef.current?.showPicker()}/>
           </div>
         </Grid.Col>
 

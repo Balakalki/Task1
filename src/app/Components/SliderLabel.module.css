@@ -1,13 +1,4 @@
-.label {
-    position: absolute;
-    top: -30px; /* Move the label above the thumb */
-    height: auto;
-    background-color: transparent;
-    color: black;
-    font-size: 14px;
-    font-weight: bold;
-  }
-  
+
   .thumb {
     background-color: white ; /* Customize thumb color */
     height: 14px;

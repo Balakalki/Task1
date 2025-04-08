@@ -54,7 +54,7 @@ export async function GET(req: NextRequest) {
     }
 
     if (salaryMinParam) {
-      conditions.push(`j.salary_min >= $${params.length + 1}`);
+      conditions.push(`j.salary_max >= $${params.length + 1}`);
       params.push(Number(salaryMinParam));
     }
 

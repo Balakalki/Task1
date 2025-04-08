@@ -26,7 +26,7 @@ interface Filters{
 }
 
 export default function Header({ onSearch, onPosted }: SearchBoxProps) {
-  const menuItems = ["Home", "Find Talents", "About us", "Testimonials"];
+  const menuItems = ["Home","Find Jobs", "Find Talents", "About us", "Testimonials"];
   const [range, setRange] = useState<[number, number]>([0, 500]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const Locations = [{label:"All Locations", value:"All Locations"},{label:"Chennai", value:"Chennai"}, {label:"Hyderabad", value:"Hyderabad"}, {label:"Delhi", value:"Delhi"}, {label:"Benguluru", value:"Benguluru"}];
@@ -38,7 +38,7 @@ export default function Header({ onSearch, onPosted }: SearchBoxProps) {
     location: "",
     job_Type: "",
     salary_Min: 0,
-    salary_Max: 500000,
+    salary_Max: 500,
   });
   const handleChange = (name: string, value: string) => {
     if(name === "location" && value === "All Locations"){
@@ -62,7 +62,7 @@ export default function Header({ onSearch, onPosted }: SearchBoxProps) {
   const debouncedSetFilters = useCallback(
     debounce((updatedFilters: (prev: Filters) => Filters) => {
       setFilters(updatedFilters);
-    }, 300), 
+    }, 500), 
     []
   );
   const handleSalaryChange = (newRange: [number, number]) => {
@@ -101,9 +101,9 @@ export default function Header({ onSearch, onPosted }: SearchBoxProps) {
           {menuItems.map((item, ind) => (
             <div
               key={ind}
-              className="px-7 cursor-pointer py-2 font-semibold rounded-2xl transition-all duration-300 
-                      hover:shadow-[0_3px_2px_rgba(0,0,0,0.1)] 
-                      hover:scale-100 hover:translate-y-1 hover:translate-x-1 hover:bg-white will-change-transform transform-gpu"
+              className="px-7 cursor-pointer py-2 font-semibold rounded-lg transition-all duration-300 
+                      hover:shadow-[-1.5px_3px_5px_rgba(0,0,0,0.1)] 
+                      hover:translate-y-1 hover:translate-x-1 hover:bg-white will-change-transform transform-gpu"
             >
               {item}
             </div>
@@ -118,7 +118,7 @@ export default function Header({ onSearch, onPosted }: SearchBoxProps) {
                 border: "none",
               }}
               onClick={() => setIsModalOpen(true)}
-              className={`relative cursor-pointer group-hover:scale-105 w-32 h-10 overflow-hidden rounded-lg bg-blue-600 text-white font-semibold`}
+              className={`relative cursor-pointer group-hover:scale-105 w-32 h-10 overflow-hidden rounded-lg text-white font-semibold`}
             >
               <span className="absolute inset-0 flex items-center justify-center transition-transform duration-300 group-hover:-translate-y-full">
                 Create Job
@@ -188,11 +188,9 @@ export default function Header({ onSearch, onPosted }: SearchBoxProps) {
             step={10}
             classNames={{
               thumb: classes.thumb,
-              label: classes.label,
               track: classes.track,
               bar: classes.bar,
             }}
-            labelAlwaysOn
             label={null}
             className="px-2"
           />

@@ -12,7 +12,7 @@ export default function Home() {
     location: "",
     job_Type: "",
     salary_Min: 0,
-    salary_Max: 1000000,
+    salary_Max: 500,
   });
 
   const fetchJobs = async () => {
