@@ -79,7 +79,7 @@ export async function GET(req: NextRequest) {
   }
 }
 
-// POST Route: Insert Job After Fetching/Inserting Company & Location
+
 export async function POST(req: NextRequest) {
   try {
     await corsMiddleware(new NextResponse());
